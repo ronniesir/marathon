@@ -22,7 +22,9 @@ export default {
     }
   },
   methods: {
-    onSubmit () { }
+    onSubmit () { 
+      this.$router.push('/test/model')
+    }
   }
 }
 </script>
