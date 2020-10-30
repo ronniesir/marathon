@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow-y:scroll">
     <timeline>
       <timeline-title>我的结果</timeline-title>
       <timeline-item v-for="(img,index) of images" :key="index" bg-color="#9dd8e0">
