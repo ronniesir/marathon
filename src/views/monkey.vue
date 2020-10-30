@@ -35,13 +35,14 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
       value1: 0,
       value2: '0',
-      checked1:false,
-      checked2:false,
+      checked1: false,
+      checked2: false,
       option1: [
         { text: '切换', value: 0 },
         { text: '点击', value: 1 },
@@ -54,7 +55,17 @@ export default {
 
     },
     run () {
-      this.$router.push('/run')
+      var baseUrl = window.location.origin;
+      axios.post(`${baseUrl}/api/run`, {
+        params: {
+          second: this.time
+        }
+      }).then(res => {
+        const result = res.data;
+        this.$router.push('/run')
+        console.log(result)
+      });
+
     },
     back () {
       this.$router.go(-1)
@@ -91,7 +102,7 @@ export default {
   width: 32px;
   height: 32px;
 }
-.check-container{
+.check-container {
   display: flex;
   flex-direction: row;
 }

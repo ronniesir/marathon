@@ -1,13 +1,33 @@
 <template>
   <div>
-    <div class="title">CPU</div>
+    <div class="title title-bar">
+      <span>CPU</span>
+      <span>
+        <van-button type="primary" size="mini" @click="open">查看结果</van-button>
+      </span>
+    </div>
     <div id="cupChart" :style="{ height: '280px'}"></div>
     <div class="title">Memory</div>
     <div id="memoryChart" :style="{ height: '280px'}"></div>
+
+    <van-popup v-model="show" position="center" :style="{ height: '140px',width:'300px' }">
+      <div class="pop-container">
+        <div class="item">
+          <span>WIFI</span>
+          <img style="width:120px;height:120px" src="@/assets/result.png" />
+        </div>
+        <div class="item">
+          <span>RESULT</span>
+          <img style="width:120px;height:120px;" src="@/assets/result.png" />
+        </div>
+
+      </div>
+    </van-popup>
   </div>
 </template>
 <script>
 import echarts from 'echarts'
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -15,7 +35,8 @@ export default {
       memoryData: {
         xAxis: [],
         yAxis: []
-      }
+      },
+      show: false
     }
   },
   mounted () {
@@ -54,6 +75,9 @@ export default {
 
     let memoryChart = echarts.init(document.getElementById("memoryChart"));
     const memoryOption = {
+      tooltip: {
+
+      },
       xAxis: {
         type: 'category',
         data: this.memoryData.xAxis
@@ -63,26 +87,59 @@ export default {
       },
       series: [{
         data: this.memoryData.yAxis,
-        type: 'line'
+        type: 'line',
+        label: {
+          normal: {
+            show: true
+          }
+        }
       }]
     };
     memoryChart.setOption(memoryOption)
 
+    var baseUrl = window.location.origin;
 
-    setInterval(() => {
-      this.cpuData[0].value = (Math.random() * 100).toFixed(2) - 0;
-      cupChart.setOption(cpuOption)
+    this.myInterval = setInterval(() => {
 
-      const date = new Date();
-      const currentTime = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+      axios.get(`${baseUrl}/api/cpu`).then(res => {
+        console.log('------', res.data)
+        const result = res.data;
+        if (result) {
+          this.cpuData[0].value = (result * 1 / 8).toFixed(2)
+        } else {
+          this.cpuData[0].value = (Math.random() * 100).toFixed(2) - 0;
+        }
 
+        cupChart.setOption(cpuOption)
+      });
 
-      const currentMemory = (Math.random() * 100).toFixed(2) - 0;
-      this.memoryData.xAxis.push(currentTime)
-      this.memoryData.yAxis.push(currentMemory)
+      axios.get(`${baseUrl}/api/memory`).then(res => {
+        const result = res.data;
+        const date = new Date();
+        const currentTime = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+        this.memoryData.xAxis.push(currentTime)
 
-      memoryChart.setOption(memoryOption)
-    }, 2000);
+        if (result) {
+          this.memoryData.yAxis.push(result * 1);
+        } else {
+          const currentMemory = (Math.random() * 100).toFixed(2) - 0;
+          this.memoryData.yAxis.push(currentMemory)
+        }
+        memoryChart.setOption(memoryOption)
+      });
+
+    }, 5000);
+  },
+  methods: {
+    open () {
+      this.show = true;
+    }
+  },
+  destroyed () {
+    if (this.myInterval) {
+      clearInterval(this.myInterval);
+    }
+
   }
 }
 </script>
@@ -90,5 +147,20 @@ export default {
 <style scoped>
 .title {
   padding: 8px 16px;
+}
+.title-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.pop-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+.pop-container .item {
+  text-align: center;
 }
 </style>

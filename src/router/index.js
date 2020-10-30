@@ -8,28 +8,33 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name:'home',
-      redirect:'/login'
+      name: 'home',
+      redirect: '/login'
     },
     {
       path: '/login',
-      name:'login',
+      name: 'login',
       component: () => import('@/views/login.vue'),
     },
     {
       path: '/test/model',
-      name:'testModel',
+      name: 'testModel',
       component: () => import('@/views/TestModel.vue'),
     },
     {
       path: '/monkey',
-      name:'monkey',
+      name: 'monkey',
       component: () => import('@/views/monkey.vue'),
     },
     {
       path: '/run',
-      name:'run',
+      name: 'run',
       component: () => import('@/views/run.vue'),
+    },
+    {
+      path: '/result',
+      name: 'result',
+      component: () => import('@/views/result.vue'),
     },
   ]
 });

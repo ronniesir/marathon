@@ -1,6 +1,6 @@
 <template>
   <div class="test-model-container">
-    <van-button icon="user-o" class="test-button" plain type="primary" @click="monkey">Monkey</van-button>
+    <van-button icon="user-o" class="test-button" plain type="primary" @click="monkey">资源监控</van-button>
     <van-button icon="bulb-o" class="test-button" style="margin-left:16px" plain type="info" @click="goThrough">智能遍历</van-button>
   </div>
 </template>
@@ -8,10 +8,10 @@
 export default {
   methods: {
     monkey () {
-      this.$router.push('/monkey')
+      this.$router.push('/run')
     },
     goThrough () {
-
+      this.$router.push('/monkey')
     }
   }
 }
