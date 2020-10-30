@@ -3,24 +3,32 @@
 
     <div class="btn-container">
       <van-button class="back" icon="arrow-left" type="primary" round @click="back" />
+      <van-dropdown-menu>
+        <van-dropdown-item class="drowdown-item" v-model="value1" :options="option1" />
+      </van-dropdown-menu>
     </div>
 
-    <van-cell-group title="Monkey Setting">
+    <div class="check-container">
+      <van-cell center title="异常终止">
+        <template #right-icon>
+          <van-switch v-model="checked1" size="24" />
+        </template>
+      </van-cell>
+      <van-cell center title="自动停止">
+        <template #right-icon>
+          <van-switch v-model="checked2" size="24" />
+        </template>
+      </van-cell>
+    </div>
 
-      <van-dropdown-menu>
-        <van-dropdown-item v-model="value1" :options="option1" />
-        <van-dropdown-item v-model="value2" :options="option2" />
-      </van-dropdown-menu>
-
-      <van-cell title="执行时间" :value="time+'s'" />
-      <div style="padding:10px 16px;">
-        <van-slider v-model="time" bar-height="16px" @change="onChange">
-          <template #button>
-            <div class="custom-button">{{ time }}s</div>
-          </template>
-        </van-slider>
-      </div>
-    </van-cell-group>
+    <van-cell title="执行时间" :value="time+'s'" />
+    <div style="padding:10px 16px;">
+      <van-slider v-model="time" bar-height="16px" @change="onChange" max="120">
+        <template #button>
+          <div class="custom-button">{{ time }}s</div>
+        </template>
+      </van-slider>
+    </div>
 
     <van-button style="margin-top:32px" type="primary" @click="run">运行</van-button>
 
@@ -32,15 +40,13 @@ export default {
     return {
       value1: 0,
       value2: '0',
+      checked1:false,
+      checked2:false,
       option1: [
-        { text: '切换1', value: 0 },
-        { text: '切换2', value: 1 },
+        { text: '切换', value: 0 },
+        { text: '点击', value: 1 },
       ],
-      option2: [
-        { text: '点击1', value: '0' },
-        { text: '点击2', value: '1' },
-      ],
-      time: 10
+      time: 30
     };
   },
   methods: {
@@ -72,11 +78,21 @@ export default {
   background-color: #4fc08d;
   border-radius: 100px;
 }
-.btn-container{
+.btn-container {
   padding: 16px 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.drowdown-item {
+  width: 100px;
 }
 .back {
   width: 32px;
   height: 32px;
+}
+.check-container{
+  display: flex;
+  flex-direction: row;
 }
 </style>
