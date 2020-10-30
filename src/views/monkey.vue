@@ -1,18 +1,20 @@
 <template>
   <div class="monkey-container">
 
+    <div class="btn-container">
+      <van-button class="back" icon="arrow-left" type="primary" round @click="back" />
+    </div>
+
     <van-cell-group title="Monkey Setting">
-      <van-field readonly clickable label="切换模式" :value="actValue" placeholder="选择切换模式" @click="showActPicker = true" />
-      <van-popup v-model="showActPicker" round position="bottom">
-        <van-picker show-toolbar :columns="activeModel" @cancel="showActPicker = false" @confirm="onActConfirm" />
-      </van-popup>
-      <van-field readonly clickable label="点击模式" :value="clickValue" placeholder="选择点击模式" @click="showClickPicker = true" />
-      <van-popup v-model="showClickPicker" round position="bottom">
-        <van-picker show-toolbar :columns="clickModel" @cancel="showClickPicker = false" @confirm="onClickConfirm" />
-      </van-popup>
+
+      <van-dropdown-menu>
+        <van-dropdown-item v-model="value1" :options="option1" />
+        <van-dropdown-item v-model="value2" :options="option2" />
+      </van-dropdown-menu>
+
       <van-cell title="执行时间" :value="time+'s'" />
-      <div style="padding:10px 16px">
-        <van-slider v-model="time" @change="onChange">
+      <div style="padding:10px 16px;">
+        <van-slider v-model="time" bar-height="16px" @change="onChange">
           <template #button>
             <div class="custom-button">{{ time }}s</div>
           </template>
@@ -20,7 +22,7 @@
       </div>
     </van-cell-group>
 
-    <van-button type="primary" @click="run">运行</van-button>
+    <van-button style="margin-top:32px" type="primary" @click="run">运行</van-button>
 
   </div>
 </template>
@@ -28,29 +30,28 @@
 export default {
   data () {
     return {
-      actValue: '',
-      showActPicker: false,
-      activeModel: ['切换1', '切换2'],
-      clickValue: '',
-      showClickPicker: false,
-      clickModel: ['click1', 'click2'],
+      value1: 0,
+      value2: '0',
+      option1: [
+        { text: '切换1', value: 0 },
+        { text: '切换2', value: 1 },
+      ],
+      option2: [
+        { text: '点击1', value: '0' },
+        { text: '点击2', value: '1' },
+      ],
       time: 10
     };
   },
   methods: {
-    onActConfirm (value) {
-      this.actValue = value;
-      this.showActPicker = false;
-    },
-    onClickConfirm (value) {
-      this.clickValue = value;
-      this.showClickPicker = false;
-    },
     onChange () {
 
     },
-    run(){
-      
+    run () {
+
+    },
+    back () {
+      this.$router.go(-1)
     }
   },
 };
@@ -63,12 +64,19 @@ export default {
   flex-direction: column;
 }
 .custom-button {
-    width: 26px;
-    color: #fff;
-    font-size: 10px;
-    line-height: 18px;
-    text-align: center;
-    background-color: #4fc08d;
-    border-radius: 100px;
-  }
+  width: 26px;
+  color: #fff;
+  font-size: 10px;
+  line-height: 18px;
+  text-align: center;
+  background-color: #4fc08d;
+  border-radius: 100px;
+}
+.btn-container{
+  padding: 16px 8px;
+}
+.back {
+  width: 32px;
+  height: 32px;
+}
 </style>
