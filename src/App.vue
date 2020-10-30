@@ -14,4 +14,14 @@ export default {
 </script>
 
 <style>
+.back {
+  width: 32px;
+  height: 32px;
+}
+.btn-container {
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 </style>

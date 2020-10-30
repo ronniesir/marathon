@@ -2,7 +2,7 @@
   <div class="monkey-container">
 
     <div class="btn-container">
-      <van-button class="back" icon="arrow-left" type="primary" round @click="back" />
+      <van-button class="back" icon="arrow-left" type="primary"  @click="back" />
       <van-dropdown-menu>
         <van-dropdown-item class="drowdown-item" v-model="value1" :options="option1" />
       </van-dropdown-menu>
@@ -97,10 +97,6 @@ export default {
 }
 .drowdown-item {
   width: 100px;
-}
-.back {
-  width: 32px;
-  height: 32px;
 }
 .check-container {
   display: flex;

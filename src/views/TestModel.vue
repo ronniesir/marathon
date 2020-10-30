@@ -8,7 +8,7 @@
 export default {
   methods: {
     monkey () {
-      this.$router.push('/run')
+      this.$router.push('/monitor')
     },
     goThrough () {
       this.$router.push('/monkey')

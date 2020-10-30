@@ -32,6 +32,11 @@ export default new Router({
       component: () => import('@/views/run.vue'),
     },
     {
+      path: '/monitor',
+      name: 'monitor',
+      component: () => import('@/views/monitor.vue'),
+    },
+    {
       path: '/result',
       name: 'result',
       component: () => import('@/views/result.vue'),

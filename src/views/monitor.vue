@@ -1,33 +1,16 @@
 <template>
-  <div>
+  <div id="monitor">
+    <div class="btn-container">
+      <van-button class="back" icon="arrow-left" type="primary" @click="back" />
+    </div>
     <div class="title title-bar">
-      <div>
-        <van-button class="back" icon="arrow-left" type="primary" @click="back" /><span>CPU</span>
-      </div>
-      <span>
-        <van-button type="primary" size="mini" @click="open">查看结果</van-button>
-      </span>
+      <span>CPU</span>
     </div>
     <div id="cupChart" :style="{ height: '280px'}"></div>
     <van-button class="down-btn" icon="down" type="primary" @click="down" />
-
     <div class="title">Memory</div>
     <div id="memoryChart" :style="{ height: '280px'}"></div>
     <van-button class="up-btn" icon="back-top" type="primary" @click="up" />
-
-    <van-popup v-model="show" position="center" :style="{ height: '140px',width:'300px' }">
-      <div class="pop-container">
-        <div class="item">
-          <span>WIFI</span>
-          <img style="width:120px;height:120px" src="@/assets/result.png" />
-        </div>
-        <div class="item">
-          <span>RESULT</span>
-          <img style="width:120px;height:120px;" src="@/assets/result.png" />
-        </div>
-
-      </div>
-    </van-popup>
   </div>
 </template>
 <script>
@@ -36,7 +19,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      cpuData: [{ value: 0, name: 'CPU' }],
+      cpuData: [{ value: 50, name: 'CPU' }],
       memoryData: {
         xAxis: [],
         yAxis: []
@@ -125,9 +108,9 @@ export default {
         this.memoryData.xAxis.push(currentTime)
 
         if (result) {
-          this.memoryData.yAxis.push(result * 1000);
+          this.memoryData.yAxis.push(result * 1);
         } else {
-          const currentMemory = (Math.random() * 1000).toFixed(2) - 0;
+          const currentMemory = (Math.random() * 100).toFixed(2) - 0;
           this.memoryData.yAxis.push(currentMemory)
         }
         memoryChart.setOption(memoryOption)
@@ -139,14 +122,14 @@ export default {
     open () {
       this.show = true;
     },
+    back () {
+      this.$router.go(-1)
+    },
     down () {
       window.scroll({ top: 700, left: 0, behavior: 'smooth' });
     },
     up () {
-      window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-    },
-    back () {
-      this.$router.go(-1)
+       window.scroll({ top: 0, left: 0, behavior: 'smooth' });
     }
   },
   destroyed () {
