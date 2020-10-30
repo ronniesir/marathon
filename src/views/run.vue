@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div id="myChart" :style="{ height: '320px'}"></div>
+    <div class="title">CPU</div>
+    <div id="cupChart" :style="{ height: '280px'}"></div>
+    <div class="title">Memory</div>
+    <div id="memoryChart" :style="{ height: '280px'}"></div>
   </div>
 </template>
 <script>
@@ -8,106 +11,84 @@ import echarts from 'echarts'
 export default {
   data () {
     return {
-      option: {
-        tooltip: {
-          formatter: '{a} <br/>{b} : {c}%'
-        },
-        toolbox: {
-          feature: {
-            restore: {},
-            saveAsImage: {}
-          }
-        },
-        series: [
-          {
-            name: '速度',
-            type: 'gauge',
-            z: 3,
-            min: 0,
-            max: 220,
-            splitNumber: 11,
-            radius: '100%',
-            axisLine: {            // 坐标轴线
-              lineStyle: {       // 属性lineStyle控制线条样式
-                width: 10
-              }
-            },
-            axisTick: {            // 坐标轴小标记
-              length: 15,        // 属性length控制线长
-              lineStyle: {       // 属性lineStyle控制线条样式
-                color: 'auto'
-              }
-            },
-            splitLine: {           // 分隔线
-              length: 20,         // 属性length控制线长
-              lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-                color: 'auto'
-              }
-            },
-            axisLabel: {
-              backgroundColor: 'auto',
-              borderRadius: 2,
-              color: '#eee',
-              padding: 3,
-              textShadowBlur: 2,
-              textShadowOffsetX: 1,
-              textShadowOffsetY: 1,
-              textShadowColor: '#222'
-            },
-            title: {
-              // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-              fontWeight: 'bolder',
-              fontSize: 20,
-              fontStyle: 'italic'
-            },
-            detail: {
-              // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-              formatter: function (value) {
-                value = (value + '').split('.');
-                value.length < 2 && (value.push('00'));
-                return ('00' + value[0]).slice(-2)
-                  + '.' + (value[1] + '00').slice(0, 2);
-              },
-              fontWeight: 'bolder',
-              borderRadius: 3,
-              backgroundColor: '#444',
-              borderColor: '#aaa',
-              shadowBlur: 5,
-              shadowColor: '#333',
-              shadowOffsetX: 0,
-              shadowOffsetY: 3,
-              borderWidth: 2,
-              textBorderColor: '#000',
-              textBorderWidth: 2,
-              textShadowBlur: 2,
-              textShadowColor: '#fff',
-              textShadowOffsetX: 0,
-              textShadowOffsetY: 0,
-              fontFamily: 'Arial',
-              width: 100,
-              color: '#eee',
-              rich: {}
-            },
-            data: [{ value: 40, name: 'km/h' }]
-          },
-          {
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'line'
-          }
-        ],
-        xAxis: {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        yAxis: {
-          type: 'value'
-        },
+      cpuData: [{ value: 50, name: 'CPU' }],
+      memoryData: {
+        xAxis: [],
+        yAxis: []
       }
     }
   },
   mounted () {
-    let myChart = echarts.init(document.getElementById("myChart"));
-    myChart.setOption(this.option)
+    let cupChart = echarts.init(document.getElementById("cupChart"));
+    const cpuOption = {
+      tooltip: {
+        formatter: '{a} <br/>{b} : {c}%'
+      },
+      series: [
+        {
+          name: '业务指标',
+          type: 'gauge',
+          detail: { formatter: '{value}%' },
+          data: this.cpuData
+        }
+      ],
+      axisLine: {            // 坐标轴线
+        lineStyle: {       // 属性lineStyle控制线条样式
+          width: 8
+        }
+      },
+      axisTick: {            // 坐标轴小标记
+        show: false
+      },
+      splitLine: {           // 分隔线
+        length: 15,         // 属性length控制线长
+        lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+          color: 'auto'
+        }
+      },
+      pointer: {
+        width: 2
+      },
+    }
+    cupChart.setOption(cpuOption)
+
+    let memoryChart = echarts.init(document.getElementById("memoryChart"));
+    const memoryOption = {
+      xAxis: {
+        type: 'category',
+        data: this.memoryData.xAxis
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [{
+        data: this.memoryData.yAxis,
+        type: 'line'
+      }]
+    };
+    memoryChart.setOption(memoryOption)
+
+
+    setInterval(() => {
+      this.cpuData[0].value = (Math.random() * 100).toFixed(2) - 0;
+      cupChart.setOption(cpuOption)
+
+      const date = new Date();
+      const currentTime = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+
+
+      const currentMemory = (Math.random() * 100).toFixed(2) - 0;
+      this.memoryData.xAxis.push(currentTime)
+      this.memoryData.yAxis.push(currentMemory)
+
+      memoryChart.setOption(memoryOption)
+    }, 2000);
   }
 }
 </script>
+
+<style scoped>
+.title {
+  padding: 8px 16px;
+}
+</style>
