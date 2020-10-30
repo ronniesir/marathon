@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     onSubmit () { 
-      this.$router.push('/test/model')
+      this.$router.push('/result')
     }
   }
 }

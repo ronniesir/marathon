@@ -19,11 +19,11 @@
       <div class="pop-container">
         <div class="item">
           <span>WIFI</span>
-          <img style="width:120px;height:120px" src="@/assets/result.png" />
+          <img style="width:110px;height:110px" src="@/assets/wifi.png" />
         </div>
         <div class="item">
           <span>RESULT</span>
-          <img style="width:120px;height:120px;" src="@/assets/result.png" />
+          <img style="width:110px;height:110px;" src="@/assets/result.png" />
         </div>
 
       </div>
