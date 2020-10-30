@@ -1,7 +1,7 @@
 <template>
   <div class="test-model-container">
-    <van-button class="test-button" plain type="primary" @click="monkey">Monkey测试</van-button>
-    <van-button class="test-button" style="margin-left:16px" plain type="info" @click="goThrough">智能遍历测试</van-button>
+    <van-button icon="user-o" class="test-button" plain type="primary" @click="monkey">Monkey</van-button>
+    <van-button icon="bulb-o" class="test-button" style="margin-left:16px" plain type="info" @click="goThrough">智能遍历</van-button>
   </div>
 </template>
 <script>
@@ -28,5 +28,6 @@ export default {
 .test-button {
   width: 100%;
   height: 100px;
+  font-size: 24px;
 }
 </style>

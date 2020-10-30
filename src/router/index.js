@@ -26,5 +26,10 @@ export default new Router({
       name:'monkey',
       component: () => import('@/views/monkey.vue'),
     },
+    {
+      path: '/run',
+      name:'run',
+      component: () => import('@/views/run.vue'),
+    },
   ]
 });

@@ -54,7 +54,7 @@ export default {
 
     },
     run () {
-
+      this.$router.push('/run')
     },
     back () {
       this.$router.go(-1)
