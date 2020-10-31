@@ -4,7 +4,7 @@
       <timeline-title>我的结果</timeline-title>
       <timeline-item v-for="(img,index) of images" :key="index" bg-color="#9dd8e0">
         <div class="date">{{getName(img)}}</div>
-        <img style="width:400px" :src="getPath(img)" />
+        <img style="width:360px" :src="getPath(img)" />
       </timeline-item>
     </timeline>
   </div>

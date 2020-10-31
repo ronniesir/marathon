@@ -19,7 +19,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      cpuData: [{ value: 50, name: 'CPU' }],
+      cpuData: [{ value: 0, name: 'CPU' }],
       memoryData: {
         xAxis: [],
         yAxis: []
